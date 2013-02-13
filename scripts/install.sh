@@ -7,7 +7,7 @@ USER_GROUP=rdr-unimelb
 USER_SHELL=/bin/false
 
 INSTALL_DIR=${USER_HOME}/bin
-BACKUP_DIR=/var/lib/rdr-unimelb/backup
+WORKING_DIR=/var/lib/rdr-unimelb/backup
 
 echo "Adding user to system..."
 groupadd ${USER_GROUP}
@@ -23,3 +23,7 @@ chown -R ${USER_NAME}:${USER_GROUP} ${INSTALL_DIR}
 echo "Installing crontab..."
 cp scripts/crontab ${CRON_DIR}/rdr-unimelb-backup
 sed -i -e "s#%%USER_NAME%%#${USER_NAME}#g" -e "s#%%INSTALL_DIR%%#${INSTALL_DIR}#g" ${CRON_DIR}/rdr-unimelb-backup
+
+echo "Creating working directory..."
+mkdir -p ${WORKING_DIR}
+chown -R ${USER_NAME}:${USER_GROUP} ${WORKING_DIR}
